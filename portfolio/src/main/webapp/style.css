@@ -12,6 +12,10 @@
   flex: 50%;
 }
 
+.narrowColumn {
+    flex: 15%;
+}
+
 .row {
   display: flex;
 }

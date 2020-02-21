@@ -17,7 +17,10 @@
  */
 function addRandomGreeting() {
   const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
+      ['\"With great power comes great responsibility\" \n- Voltaire\n(but also Uncle Ben)',
+       '\"You\'re killin\' me, Smalls!\"\n- Ham Porter',
+       '\"Why do we fall, Bruce? So we can learn to pick ourselves up.\"\n- Thomas Wayne',
+       '\"At some point, everything is going to go south on you. You can either accept that, or you can get to work.\"\n- Mark Watney'];
 
   // Pick a random greeting.
   const greeting = greetings[Math.floor(Math.random() * greetings.length)];

@@ -15,17 +15,22 @@
 /**
  * Adds a random greeting to the page.
  */
-function addRandomGreeting() {
-  const greetings =
+function addMovieQuote() {
+  const quotes =
       ['\"With great power comes great responsibility\" \n- Voltaire\n(but also Uncle Ben)',
        '\"You\'re killin\' me, Smalls!\"\n- Ham Porter',
        '\"Why do we fall, Bruce? So we can learn to pick ourselves up.\"\n- Thomas Wayne',
-       '\"At some point, everything is going to go south on you. You can either accept that, or you can get to work.\"\n- Mark Watney'];
+       '\"At some point, everything is going to go south on you. You can either accept that, or you can get to work.\"\n- Mark Watney',
+       '\"I have been and always shall be your friend.\"\n- Spock',
+       '\"I don\'t scratch my head unless it itches and I don\'t dance unless I hear some music. I will not be intimidated. That\'s just the way it is.\"\n- Herman Boone',
+       '\"Sometimes you gotta run before you can walk.\"\n- Tony Stark',
+       '\"You never know what events are to transpire to get you home.\"\n- Jim Lovell',
+       '\"It\'s not about deserve, it\'s about what you believe. And I believe in love.\"\n- Diana Prince'];
 
   // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+  const quote = quotes[Math.floor(Math.random() * quotes.length)];
 
   // Add it to the page.
   const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
+  greetingContainer.innerText = quote;
 }

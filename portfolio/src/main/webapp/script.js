@@ -41,3 +41,11 @@ function addMovieQuote() {
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = quote;
 }
+
+function getJSONString() {
+    fetch('/data').then(response => response.json()).then((response) => {
+        const JSONElementList = document.getElementById('JSON-container')
+        JSONElementList.innerText = response;
+        console.log(response);
+    });
+}

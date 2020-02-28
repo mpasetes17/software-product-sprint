@@ -42,8 +42,15 @@ function addMovieQuote() {
   greetingContainer.innerText = quote;
 }
 
+function getJSONString() {
+    fetch('/data').then(response => response.json()).then((response) => {
+        const JSONElementList = document.getElementById('JSON-container')
+        JSONElementList.innerText = response;
+        console.log(response);
+
 function getRandomQuote() {
     fetch('/data').then(response => response.text()).then((quote) => {
         document.getElementById('quote-container').innerHTML = quote;
+
     });
 }

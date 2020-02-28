@@ -41,3 +41,9 @@ function addMovieQuote() {
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = quote;
 }
+
+function getRandomQuote() {
+    fetch('/data').then(response => response.text()).then((quote) => {
+        document.getElementById('quote-container').innerHTML = quote;
+    });
+}

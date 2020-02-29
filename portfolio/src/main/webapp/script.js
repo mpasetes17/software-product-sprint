@@ -47,10 +47,17 @@ function getJSONString() {
         const JSONElementList = document.getElementById('JSON-container')
         JSONElementList.innerText = response;
         console.log(response);
+    });
+}
 
 function getRandomQuote() {
     fetch('/data').then(response => response.text()).then((quote) => {
         document.getElementById('quote-container').innerHTML = quote;
+    });
+}
 
+function getRiddle() {
+    fetch('/riddle').then(response => response.text()).then((riddleQuestion) => {
+        document.getElementById('riddle-container').innerHTML = riddleQuestion;
     });
 }

@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body>
+  <body onload="getRiddle()">
     <div id="content">
         <h1>Michael Pasetes</h1>
         <a href="https://www.linkedin.com/in/michael-pasetes"> 
@@ -33,6 +33,18 @@
         <div id="JSON-container"></div>
         <button onclick="getRandomQuote()">Fetch a quote!</button>
         <div id="quote-container"></div>
+        <br/><br/>
+        
+        <h2>How about a riddle?</h2>
+        <div id="riddle-container"></div>
+        <form action="/riddle" method="POST">
+            <textarea name="riddle-guess">Enter answer here</textarea>
+            <input type="checkbox" name="show-answer" value="true">
+                Show Answer After Guess
+            <br/><br/>
+            <input type="submit" />
+        </form>
+
     </div>
   </body>
 </html>

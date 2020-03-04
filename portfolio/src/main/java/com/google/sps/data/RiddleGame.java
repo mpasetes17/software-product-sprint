@@ -36,13 +36,6 @@ public class RiddleGame {
         outputString = setNewRiddle();
     }
     
-    private String setNewRiddle() {
-        Random rand = new Random();
-        currentRiddle = (String) riddleMap.keySet()
-            .toArray()[rand.nextInt(riddleMap.size())];
-        return currentRiddle;
-    }
-
     public String getRiddleGameOutput() {
         return outputString;
     }
@@ -78,5 +71,24 @@ public class RiddleGame {
         outputString +=  "<b>" + newRiddle + "</b>";
         outputString = "<p>" + outputString + "</p>";
         return outputString;
+    }
+
+    private String setNewRiddle() {
+        Random rand = new Random();
+        currentRiddle = (String) riddleMap.keySet()
+            .toArray()[rand.nextInt(riddleMap.size())];
+        return currentRiddle;
+    }
+
+    private String createRiddleJSONString(String question,
+                                          String guess,
+                                          String solution) {
+        String riddleJSON = 
+        "{" +
+            "\"riddleQuestion\":\"" + question + "\"" +
+            "\"riddleGuess\":\"" + guess + "\"" +
+            "\"riddleSolution\":" + solution + "\"" +
+        "}";
+        return riddleJSON;
     }
 }

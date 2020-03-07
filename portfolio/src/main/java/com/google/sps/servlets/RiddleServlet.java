@@ -53,12 +53,8 @@ public final class RiddleServlet extends HttpServlet {
         boolean showAnswer = Boolean.valueOf(request.getParameter("show-answer"));
 
         logGuess(question, answerGuess);
-
-        String outputJSON = game.checkAnswer(question, answerGuess, showAnswer);
-        response.setContentType("text/html;");
-        response.getWriter().println(outputJSON);
         
-        //response.sendRedirect("/index.html");
+        response.sendRedirect("/index.html");
     }
 
     private void logGuess(String question, String guess) {
@@ -69,8 +65,7 @@ public final class RiddleServlet extends HttpServlet {
         datastore.put(taskEntity);
     }
 
-    private Map<String, String> getParameters(String query)  
-    {  
+    private Map<String, String> getParameters(String query)  {  
         String[] params = query.split("&"); 
         Map<String, String> map = new HashMap<String, String>();  
         for (String param : params)  

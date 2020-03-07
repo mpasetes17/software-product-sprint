@@ -32,7 +32,8 @@
         <h2>How about a riddle?</h2>
         <div id="riddleAnswer-container"></div>
         <div id="riddleQuestion-container"></div>
-        <form id="riddle-form" onsubmit="checkRiddle()">
+        <form id="riddle-form" onsubmit="checkRiddle()"
+            action="/riddle" method="POST">
             <textarea name="riddle-guess"
             id="riddle-guess">Enter answer here</textarea>
             <input id="riddle-question" name="riddle-question" type="hidden">

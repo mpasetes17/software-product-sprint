@@ -11,7 +11,9 @@ import com.google.sps.data.RiddleGame;
 import java.io.IOException;
 import java.lang.Math;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,52 +26,59 @@ public final class RiddleServlet extends HttpServlet {
     
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String outputString = game.getRiddleGameOutput();
-        outputString = "<p><b>" + outputString + "</b></p>";
+        if(null != request.getQueryString()) {
+            Map<String, String> parameterMap = getParameters(request.getQueryString());
+            String answerGuess = parameterMap.get("riddle-guess");
+            String question = parameterMap.get("riddle-question");
+            boolean showAnswer = ("%27true%27").equals(
+                                        parameterMap.get("show-answer"));
 
-        response.setContentType("text/html;");
-        response.getWriter().println(outputString);
-
-
-/*
-        Query query = new Query("Task").addSort("timestamp", SortDirection.DESCENDING);
-
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        PreparedQuery results = datastore.prepare(query);
-
-        List<String> guessHistory = new ArrayList<>();
-        for (Entity entity : results.asIterable()) {
-            long id = entity.getKey().getId();
-            String question = (String) entity.getProperty("riddleQuestion");
-            String guess = (String) entity.getProperty("answerGuess");
-
-            String riddle = "Q: " + question + "\nG: " + guess;
-            guessHistory.add(riddle);
+            question = question.substring(3, question.length()-3);
+            String outputJSON = game.checkAnswer(question, answerGuess, showAnswer);
+            response.setContentType("text/html;");
+            response.getWriter().println(outputJSON);
         }
-
-        Gson gson = new Gson();
-
-        response.setContentType("application/json;");
-        response.getWriter().println(gson.toJson(guessHistory));
-        */
+        else {
+            String outputString = game.setUpRiddle();
+            response.setContentType("text/html;");
+            response.getWriter().println(outputString);
+        }
     }
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String answerGuess = request.getParameter("riddle-guess");
+        String question = request.getParameter("riddle-question");
+        question = question.substring(3, question.length()-3);
         boolean showAnswer = Boolean.valueOf(request.getParameter("show-answer"));
-        boolean getNewRiddle = false;
 
+        logGuess(question, answerGuess);
+
+        String outputJSON = game.checkAnswer(question, answerGuess, showAnswer);
+        response.setContentType("text/html;");
+        response.getWriter().println(outputJSON);
+        
+        //response.sendRedirect("/index.html");
+    }
+
+    private void logGuess(String question, String guess) {
         Entity taskEntity = new Entity("Task");
-        taskEntity.setProperty("riddleQuestion", answerGuess);
-        taskEntity.setProperty("answerGuess", answerGuess);
+        taskEntity.setProperty("riddleQuestion", question);
+        taskEntity.setProperty("answerGuess", guess);
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         datastore.put(taskEntity);
+    }
 
-        String outputString = game.checkAnswer(answerGuess, showAnswer);
-        response.setContentType("text/html;");
-        response.getWriter().println(outputString);
-    
-        response.sendRedirect("/index.html");
+    private Map<String, String> getParameters(String query)  
+    {  
+        String[] params = query.split("&"); 
+        Map<String, String> map = new HashMap<String, String>();  
+        for (String param : params)  
+        {
+            String name = param.split("=")[0];  
+            String value = param.split("=")[1];  
+            map.put(name, value);  
+        }  
+        return map;  
     }
 }

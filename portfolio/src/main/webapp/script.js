@@ -46,11 +46,35 @@ function getJSONString() {
     fetch('/data').then(response => response.json()).then((response) => {
         const JSONElementList = document.getElementById('JSON-container')
         JSONElementList.innerText = response;
-        console.log(response);
+    });
+}
 
 function getRandomQuote() {
     fetch('/data').then(response => response.text()).then((quote) => {
         document.getElementById('quote-container').innerHTML = quote;
+    });
+}
 
+function getRiddle() {
+    fetch('/riddle').then(response => response.text()).then((riddleOutput) => {
+        riddleJSON = JSON.parse(riddleOutput);
+        const questionContainer = document.getElementById('riddleQuestion-container');
+        questionContainer.innerHTML = riddleJSON.riddleQuestion;
+        document.getElementById('riddle-question').value = riddleJSON.riddleQuestion;
+    });
+}
+
+function checkRiddle() {
+    question = document.getElementById('riddle-question').value;
+    guess = document.getElementById('riddle-guess').value;
+    showAnswer = document.getElementById('show-answer').checked;
+    requestURL = '/riddle' +
+                    '?riddle-guess=\'' + guess + '\'' +
+                    '&riddle-question=\'' + question + '\'' +
+                    '&show-answer=\'' + showAnswer + '\'';
+    fetch(requestURL).then(response => response.text()).then((riddleOutput) => {
+        riddleJSON = JSON.parse(riddleOutput);
+        alert(riddleJSON.riddleSolution);
+        document.getElementById('riddle-question').value = riddleJSON.riddleQuestion;
     });
 }
